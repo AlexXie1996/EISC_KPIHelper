@@ -37,7 +37,7 @@ class KPIHelper(object):
 			self._del_cache()
 			self._pro_len = 40
 			self._pro_cur = 0
-			self._pro_total = 8 * len(dep_dict) + 6	
+			self._pro_total = 8 * len(dep_dict) + 7	
 		elif self.mode == 'check':
 			self._get_start()
 	
@@ -62,7 +62,11 @@ class KPIHelper(object):
 		if self.mode == 'run':
 			self._process_run()
 	
-
+		# 读部长其他情况加减分
+		e_cache = read_else('data/', self.dep_dict)
+		if self.mode == 'run':
+			self._process_run()
+			
 		a_cache = {}
 		l0_cache = {}
 		l1_cache = {}
@@ -120,7 +124,7 @@ class KPIHelper(object):
  
 		# 汇总部分
 		# 计算部门总分评出优秀部门
-		d_cache = eva_dep(self.chair, self.chairs_dep_dict, c_cache2, c_cache3, c_exc, a_cache)
+		d_cache = eva_dep(self.chair, self.chairs_dep_dict, c_cache2, c_cache3, c_exc, a_cache, e_cache)
 		self._process_run()
 
 

@@ -272,8 +272,30 @@ def read_chairs(path, chairs_list, dep_dict, leader_dict):
 # :读有关出勤的表                                                 #
 #                                                                 #
 # 函数                                                            #
+#    - read_else 读其他情况加减分                                 #
 #    - read_attend 读出勤表                                       #
-###################################################################	
+###################################################################
+def read_else(path, dep):
+    """
+	"""
+	# 读其他情况加减分
+	r_dict = {}
+	
+	cur_path = '部门其他情况加减分.xlsx'
+	wb = load_workbook(path + cur_path)
+	sheetnames = wb.get_sheet_names()  
+	ws = wb.get_sheet_by_name(sheetnames[0])
+	
+	dep_num = len(dep)
+	for shift in range(dep_num):
+		name = ws.cell(row = 1+shift, column = 1).value
+		assert name in dep.keys(), "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
+		score = ws.cell(row = 1+shift, column = 2).value
+		check_score_float([score], path, cur_path, name, -5, 5)
+		r_dict[name] = score
+		
+	return r_dict 
+	
 def read_attend(path, dep_name, leader_list, member_list):
 	"""
 	"""
@@ -580,7 +602,7 @@ def cal_leader(c_cache, l_cache, m_cache, a_cache):
 #    - eva_dep 对所有部门总分排序，评出优秀部门                   #
 #    - eva_leader 对所有部长总分排序，评出优秀部长                #
 ###################################################################
-def eva_dep(chair, deps, s2, s3, exc, a_cache):
+def eva_dep(chair, deps, s2, s3, exc, a_cache, e_cache):
 	"""
 	"""
 	d_total_score = {}
@@ -596,6 +618,7 @@ def eva_dep(chair, deps, s2, s3, exc, a_cache):
 			if d in exc:
 				sc = sc + 0.3 * exc[d]
 			
+			sc += e_cache[d]
 			d_total_score[d] = sc
 
 	sorted_d_total_score = sorted(d_total_score.items(), key=lambda d:d[1], reverse = True)
