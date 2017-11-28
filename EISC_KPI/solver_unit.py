@@ -291,6 +291,9 @@ def read_else(path, dep):
 		name = ws.cell(row = 1+shift, column = 1).value
 		assert name in dep.keys(), "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
 		score = ws.cell(row = 1+shift, column = 2).value
+		
+		if score is None:
+			score = 0
 		check_score_float([score], path, cur_path, name, -5, 5)
 		r_dict[name] = score
 		
