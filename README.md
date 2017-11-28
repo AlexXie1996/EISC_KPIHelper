@@ -13,6 +13,7 @@
     - data/(部门名)/leader/ltol 部长对其他部长评价表
     - data/(部门名)/leader/ltom 部长对干事评价表
     - data/(部门名)/member 干事自评表
+    - data/ 部门其他情况加减分
     - model 3份反馈表模板
  - 用python3执行main.py，（可添加check参数先对资料进行检验）
 
