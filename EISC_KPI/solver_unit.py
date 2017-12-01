@@ -148,7 +148,7 @@ def read_table1(path, cur_path, leader_dict):
 
 	for shift in range(total):
 		name = ws.cell(row = 7, column = 9+shift).value
-		assert name is in leader_dict.values(), "在路径： {0} 中文件 '{1}' 的成员： '{2}' 有误，请检查该文件".format(path, cur_path, name)
+		assert name is in leader_dict.values(), "在路径： {0} 中文件 {1} 的成员： {2} 有误，请检查该文件".format(path, cur_path, name)
 
 		for d in leader_dict:
 			sc = 0
