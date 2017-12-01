@@ -184,7 +184,7 @@ def read_table2(path, cur_path, dep):
 		re_dict[name] = sc
 
 	if len(dep)%2 == 1:
-		name, sc = _read_table2_helper(ws, 8+len(dep)//2, 1, dep, path, cur_path)
+		name, sc = _read_table2_helper(ws, 8+11*(len(dep)//2), 1, dep, path, cur_path)
 		re_dict[name] = sc
 
 	return re_dict
@@ -350,7 +350,7 @@ def read_attend(path, dep_name, leader_list, member_list):
 		d_attend_score1 = d_attend_score1 - 0.2*s1 - 0.4*s2 - 0.6*s3
 		d_attend_score2 = d_attend_score2 + 0.2*s4 + s5
 		
-	d_attend_score = 2 + max(d_attend_score1, -2)
+	d_attend_score = 2 + max(d_attend_score1, -2)# + d_attend_score2
 
 	return (attend_dict, d_attend_score)
 	
@@ -470,7 +470,7 @@ def read_leader1(path, l_list):
 # :读有关干事的表                                                 #
 #                                                                 #
 # 函数                                                            #
-#    - read_member 读干事自评表                                   #
+#    - read_member 读部长对干事的评价表                           #
 ###################################################################	
 def read_member(path, m_list, leader_list):
 	"""
@@ -624,11 +624,14 @@ def eva_dep(chair, deps, s2, s3, exc, a_cache, e_cache):
 		for d in deps[c]:
 			(_, d_attend_score) = a_cache[d]
 
+
 			sc = s2[d] / 6 + 3 * s3[d] / 50 + d_attend_score
+	
 			if d in exc:
 				sc = sc + 0.3 * exc[d]
-			
+
 			sc += e_cache[d]
+
 			d_total_score[d] = sc
 
 	sorted_d_total_score = sorted(d_total_score.items(), key=lambda d:d[1], reverse = True)
@@ -844,7 +847,7 @@ def write_all(deps, d_cache, l_top3, path, cal_cache):
 	for shift in range(len(deps)//5):
 		for shift2 in range(5):
 			name = ws.cell(row = 13+shift*9, column=1+shift2*3).value.strip()
-			assert name in deps.keys(), "model文件 '{0}' 的成员： '{1}' 不存在，请检查该文件".format('绩效考核反馈表.xlsx',name)
+			assert name in deps.keys(), "model文件 {0} 的成员： {1} 不存在，请检查该文件".format('绩效考核反馈表.xlsx',name)
 			(_, _, sorted_total_score_dict) = cal_cache[name]
 			ws.cell(row=15+shift*9, column=1+shift2*3, value=str(sorted_total_score_dict[0][0]))
 			ws.cell(row=15+shift*9, column=2+shift2*3, value="{0:.5}".format(sorted_total_score_dict[0][1]))
@@ -854,8 +857,8 @@ def write_all(deps, d_cache, l_top3, path, cal_cache):
 			ws.cell(row=19+shift*9, column=2+shift2*3, value="{0:.5}".format(sorted_total_score_dict[2][1]))
 
 	for shift in range(len(deps)%5):
-		name = ws.cell(row = 13+(len(deps)//5)*9, column=1+shift2*3).value.strip()
-		assert name in deps.keys(), "model文件 '{0}' 的成员： '{1}' 不存在，请检查该文件".format('绩效考核反馈表.xlsx',name)
+		name = ws.cell(row = 13+(len(deps)//5)*9, column=1+shift*3).value.strip()
+		assert name in deps.keys(), "model文件 {0} 的成员： {1} 不存在，请检查该文件".format('绩效考核反馈表.xlsx',name)
 		(_, _, sorted_total_score_dict) = cal_cache[name]
 		ws.cell(row=15+(len(deps)//5)*9, column=1+shift*3, value=str(sorted_total_score_dict[0][0]))
 		ws.cell(row=15+(len(deps)//5)*9, column=2+shift*3, value="{0:.5}".format(sorted_total_score_dict[0][1]))
@@ -865,8 +868,3 @@ def write_all(deps, d_cache, l_top3, path, cal_cache):
 		ws.cell(row=19+(len(deps)//5)*9, column=2+shift*3, value="{0:.5}".format(sorted_total_score_dict[2][1]))	
 
 	wb.save(path+'绩效考核反馈表.xlsx')
-
-
-
-
-	
