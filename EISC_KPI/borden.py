@@ -100,17 +100,19 @@ def init_borden3(ws, n):
 		for j in range(5):
 			
 			str0 = ws.cell(row = 13+9*i, column = 1+3*j).value.strip()
-			for k in range(13,21):
-				for l in range(1, 3):
-					ws.cell(row=k+9*i, column=l+3*j, value="").border=border
+			for k in range(8):
+				for l in range(2):
+					ws.cell(row=k+13+9*i, column=1+l+3*j, value="").border=border
 			ws.cell(row=13+9*i, column=1+3*j, value=str0)
 			
 	for i in range(n%5):
+		str0 = ws.cell(row = 13+9*(n//5), column = 1+3*i).value.strip()
+		for k in range(8):
+				for l in range(2):
+					ws.cell(row=k+13+9*(n//5), column=1+l+3*i, value="").border=border
+		ws.cell(row=13+9*(n//5), column=1+3*i, value=str0)
+			
 
-		for k in range(13,21):
-				str0 = ws.cell(row = 13+9*(n//5), column = 1+3*j).value.strip()
-				for l in range(1, 3):
-					ws.cell(row=k+9*(n//5), column=l+3*j, value="").border=border
-				ws.cell(row=13+9*(n//5), column=1+3*j, value=str0)
+		ws.cell(row=13+9*(n//5), column=1+3*j, value=str0)
 			
 
