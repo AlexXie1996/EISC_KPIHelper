@@ -328,6 +328,8 @@ def read_attend(path, dep_name, leader_list, member_list):
 
 	for shift in range(len(all_list)):
 		name = ws.cell(row = 3+shift*2, column = 2).value
+		assert name in all_list, "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
+		
 		s1 = ws.cell(row = 3+shift*2, column = 3).value
 		s2 = ws.cell(row = 3+shift*2, column = 4).value
 		s3 = ws.cell(row = 3+shift*2, column = 5).value
@@ -345,7 +347,6 @@ def read_attend(path, dep_name, leader_list, member_list):
 		if s5 is None:
 			s5 = 0
 
-		assert name in all_list, "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
 		check_score_int([s1,s2,s3,s4], path, cur_path, name, 0, 10)
 		check_score_float([s5], path, cur_path, name, -5, 5)
 		
@@ -383,11 +384,10 @@ def read_leader0(path, l_list, member_list):
 
 		for shift in range(len(member_list)):
 			# 部长对干事评价
-			name = ws.cell(row = 22+shift, column = 1).value.strip()
-			com = ws.cell(row = 22+shift, column = 2).value
-			
+			name = ws.cell(row = 22+shift, column = 1).value
 			assert name in member_list, "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
-
+			
+			com = ws.cell(row = 22+shift, column = 2).value
 			if name not in ltom_comment_dict:
 				ltom_comment_dict[name] = []
 			if com is None:
