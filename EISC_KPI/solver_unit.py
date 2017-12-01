@@ -148,9 +148,8 @@ def read_table1(path, cur_path, leader_dict):
 
 	for shift in range(total):
 		name = ws.cell(row = 7, column = 9+shift).value
-		assert name in leader_dict.values(), "在路径： {0} 中文件 '{1}' 的成员： '{2}' 有误，请检查该文件".format(path, cur_path, name)
+		assert name is in leader_dict.values(), "在路径： {0} 中文件 '{1}' 的成员： '{2}' 有误，请检查该文件".format(path, cur_path, name)
 
-		name = name.strip()
 		for d in leader_dict:
 			sc = 0
 			if name in leader_dict[d]:
@@ -203,7 +202,9 @@ def read_table3(path, cur_path, dep_list, exc_dict):
 	re_dict = {}
 
 	for shift in range(len(dep_list)):
-		name = ws.cell(row = 6, column = 7+shift).value.strip()
+		name = ws.cell(row = 6, column = 7+shift).value
+		assert name in dep_list, "在路径： {0} 中文件 '{1}' 的成员： '{2}' 不存在，请检查配置文件该部门的成员是否正确填写".format(path, cur_path, name)
+		
 		s1 = ws.cell(row = 7, column = 7+shift).value
 		s2 = ws.cell(row = 8, column = 7+shift).value
 		s3 = ws.cell(row = 9, column = 7+shift).value
