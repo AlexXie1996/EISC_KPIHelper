@@ -350,7 +350,7 @@ def read_attend(path, dep_name, leader_list, member_list):
 		d_attend_score1 = d_attend_score1 - 0.2*s1 - 0.4*s2 - 0.6*s3
 		d_attend_score2 = d_attend_score2 + 0.2*s4 + s5
 		
-	d_attend_score = 2 + max(d_attend_score1, -2) + d_attend_score2
+	d_attend_score = 2 + max(d_attend_score1, -2)
 
 	return (attend_dict, d_attend_score)
 	
