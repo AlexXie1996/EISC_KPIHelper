@@ -470,7 +470,7 @@ def read_leader1(path, l_list):
 # :读有关干事的表                                                 #
 #                                                                 #
 # 函数                                                            #
-#    - read_member 读部长对干事的评价表                           #
+#    - read_member 读干事自评表                                   #
 ###################################################################	
 def read_member(path, m_list, leader_list):
 	"""
@@ -525,7 +525,10 @@ def read_member(path, m_list, leader_list):
 		m_score_dict[m] = s
 
 		# 读干事推优
-		exc = ws.cell(row = 40, column = 2).value.strip()
+		exc = ws.cell(row = 40, column = 2).value
+		if exc is None:
+			continue
+		exc = exc.strip()
 		assert exc in m_list, "在路径： {0} 中文件 '{1}'　推优 '{2}' 不在干事名单中，请检查该文件".format(path, cur_path, exc)
 		if exc not in exc_dict:
 			exc_dict[exc] = 0
