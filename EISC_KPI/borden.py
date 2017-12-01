@@ -111,8 +111,4 @@ def init_borden3(ws, n):
 				for l in range(2):
 					ws.cell(row=k+13+9*(n//5), column=1+l+3*i, value="").border=border
 		ws.cell(row=13+9*(n//5), column=1+3*i, value=str0)
-			
-
-		ws.cell(row=13+9*(n//5), column=1+3*j, value=str0)
-			
 
