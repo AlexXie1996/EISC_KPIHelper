@@ -2,7 +2,6 @@ import os
 import sys
 from KpiHelper import KPIHelper
 
-
 def main(mode='run', path='config'):
 	"""
 	"""
